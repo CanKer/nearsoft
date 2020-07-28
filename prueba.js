@@ -5,7 +5,7 @@ const express = require('express'),
       Quote = require('./Model/Quote')
 
 
-      mongoose.connect('mongodb://admin:hola666@ds237868.mlab.com:37868/prueba', {useNewUrlParser: true}).then(console.log("yes")).catch(console.log)
+      mongoose.connect('mongodb://admin:hola666@ds237868.mlab.com:37868/prueba', {useNewUrlParser: true}).then(console.log("conectado a Mongo")).catch(console.log)
 
       app.get("/guardar", async (req, res) =>  {
         let quotes = new Array()
@@ -30,9 +30,48 @@ const express = require('express'),
 
       app.get("/obtener", (req,res) =>  {
         Quote.findOneRandom((err, result) => {
-          const quote = (err) ? {} : result
-          res.send(quote.quote)
+          let { quote } = result
+          if(!err)  {
+            if(quote.length % 2 === 0) quote+= "\n NO DIVERTIDO"
+            else quote+= "\n DIVERTIDO"
+            res.format({
+              'text/plain': function(){
+                res.send(quote)
+              }
+            })
+          } else res.statusCode(404)
+
         });
       })
 
   app.listen(3000)
+
+/*
+Instrucciones
+Generar una aplicación con un backend que cargue esta lista de quotes a una base de datos y muestre en una interfaz de usuario, un quote aleatorio al clic de un botón.
+
+Parte 1
+Muestra un random quote en una interfaz de frontend.
+
+Parte 2
+Permitir grabar un nuevo quote desde el frontend.
+
+Parte 3
+Determinar si el quote es divertido:
+
+Sumar los valores ascii de todos los caracteres del quote y determinar si el resultado es:
+
+Par: no divertido
+
+Impar: divertido
+
+La cantidad de vocales es más de 0.65 veces la cantidad de consonantes: El mejor chiste de la historia
+
+Requerimientos:
+Node.js
+Express
+Alguna una base de datos
+
+http://www.textfiles.com/humor/TAGLINES/quotes-1.txt
+http://www.textfiles.com/humor/TAGLINES/quotes-2.txt
+*/
