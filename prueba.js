@@ -14,9 +14,6 @@ const express = require('express'),
           quotes1 = await axios.get('http://www.textfiles.com/humor/TAGLINES/quotes-1.txt')
           quotes2 = await axios.get('http://www.textfiles.com/humor/TAGLINES/quotes-2.txt')
 
-        } catch (e) {
-
-        } finally {
           const quotesArr1 = quotes1.data.split("*")
           const quotesArr2 = quotes2.data.split("*")
           quotes = [...quotesArr1, ...quotesArr2]
@@ -25,13 +22,16 @@ const express = require('express'),
             const QuoteM = new Quote({quote: quotes[key]})
             QuoteM.save()
           }
+          res.status(201).json({mensaje: `Se han agregado ${quotes.length} quotes`})
+        } catch (e) {
+          res.status(500).json({error: "hubo un error al intentar guardar los elementos"})
         }
       })
 
       app.get("/obtener", (req,res) =>  {
         Quote.findOneRandom((err, result) => {
-          let { quote } = result
           if(!err)  {
+            let { quote } = result
             if(quote.length % 2 === 0) quote+= "\n NO DIVERTIDO"
             else quote+= "\n DIVERTIDO"
             res.format({
@@ -39,9 +39,21 @@ const express = require('express'),
                 res.send(quote)
               }
             })
-          } else res.statusCode(404)
+          } else res.status(404).json({"error": "no hay elementos para mostrar"})
 
         });
+      })
+
+      app.get("/borrar", async(req,res) =>   {
+        let remove
+        try {
+          remove = await Quote.deleteMany()
+          console.log("remove: ", remove.deletedCount)
+          res.status(201).send(`Eliminados ${remove.deletedCount} elementos`)
+        } catch (e) {
+          res.code(500).json({error: "nel"})
+        }
+
       })
 
   app.listen(3000)
