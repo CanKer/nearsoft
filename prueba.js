@@ -22,7 +22,6 @@ const express = require('express'),
           quotes = [...quotesArr1, ...quotesArr2]
 
           for(key in quotes)  {
-            console.log("quote: ", quotes[key])
             const QuoteM = new Quote({quote: quotes[key]})
             QuoteM.save()
           }
