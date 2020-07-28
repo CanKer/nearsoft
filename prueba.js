@@ -36,33 +36,3 @@ const express = require('express'),
       })
 
   app.listen(3000)
-
-/*
-Instrucciones
-Generar una aplicación con un backend que cargue esta lista de quotes a una base de datos y muestre en una interfaz de usuario, un quote aleatorio al clic de un botón.
-
-Parte 1
-Muestra un random quote en una interfaz de frontend.
-
-Parte 2
-Permitir grabar un nuevo quote desde el frontend.
-
-Parte 3
-Determinar si el quote es divertido:
-
-Sumar los valores ascii de todos los caracteres del quote y determinar si el resultado es:
-
-Par: no divertido
-
-Impar: divertido
-
-La cantidad de vocales es más de 0.65 veces la cantidad de consonantes: El mejor chiste de la historia
-
-Requerimientos:
-Node.js
-Express
-Alguna una base de datos
-
-http://www.textfiles.com/humor/TAGLINES/quotes-1.txt
-http://www.textfiles.com/humor/TAGLINES/quotes-2.txt
-*/
