@@ -2,10 +2,10 @@ const express = require('express'),
       app = express(),
       axios = require('axios'),
       mongoose = require('mongoose'),
-      Quote = require('./Model/Quote')
+      Quote = require('./Model/Quote'),
+      settings = require('./conf')
 
-
-      mongoose.connect('mongodb://admin:hola666@ds237868.mlab.com:37868/prueba', {useNewUrlParser: true}).then(console.log("conectado a Mongo")).catch(console.log)
+      mongoose.connect(`${settings.url()}`, {useNewUrlParser: true}).then(console.log("conectado a Mongo")).catch(console.log)
 
       app.get("/guardar", async (req, res) =>  {
         let quotes = new Array()
