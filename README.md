@@ -1,5 +1,6 @@
 # nearsoft
 
+Está configurado a una instancia de Mlab, así que no es necesario instalar ni configurar ninguna base de datos.
 Rutas
 
 /guardar
@@ -14,3 +15,6 @@ Muestra un quote random
 
 Obtener contiene DIVERTIDO/NO DIVERTIDO
 
+
+/borrar
+Borra todos los elementos de la base de datos
